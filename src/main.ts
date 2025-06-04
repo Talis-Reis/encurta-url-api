@@ -1,8 +1,9 @@
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger'
 import * as packageJson from '../package.json'
 import { AppModule } from './app.module'
+import { IEnvConfig } from './shared/infrastructure/interface/env.interface'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
@@ -30,12 +31,14 @@ async function bootstrap() {
 		.addBearerAuth()
 		.build()
 
-	const document = SwaggerModule.createDocument(app, config)
+	const document: OpenAPIObject = SwaggerModule.createDocument(app, config)
 
 	SwaggerModule.setup('api', app, document, {
 		customSiteTitle: 'Encurtador de URLs',
 	})
 
-	await app.listen(process.env.PORT ?? 3000)
+	const port: number = app.get(IEnvConfig).getPort()
+
+	await app.listen(port ?? 3000)
 }
 bootstrap()
