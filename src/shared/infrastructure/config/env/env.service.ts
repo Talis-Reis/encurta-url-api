@@ -19,7 +19,7 @@ export class EnvService implements IEnvConfig {
 	}
 
 	getDbPassword(): string {
-		return this.configService.get<string>('DATABASE_PASSWORD') || '123'
+		return this.configService.get<string>('DATABASE_PASSWORD') || '1234'
 	}
 
 	getDbPort(): number {
