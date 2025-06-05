@@ -1,4 +1,10 @@
 export abstract class IEnvConfig {
-	abstract getPort(): number
+	abstract getAppPort(): number
 	abstract getNodeEnv(): string
+	abstract getDbHost(): string
+	abstract getDbName(): string
+	abstract getDbPort(): number
+	abstract getDbUsername(): string
+	abstract getDbPassword(): string
+	abstract getDbSsl(): boolean
 }

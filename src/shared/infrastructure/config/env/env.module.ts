@@ -8,7 +8,7 @@ import { EnvService } from './env.service'
 @Module({
 	imports: [ConfigModule],
 	providers: [EnvService, { provide: IEnvConfig, useExisting: EnvService }],
-	exports: [EnvService, { provide: IEnvConfig, useExisting: EnvService }],
+	exports: [{ provide: IEnvConfig, useClass: EnvService }],
 })
 export class EnvModule extends ConfigModule {
 	static forRoot<ValidationOptions extends Record<string, any>>(
@@ -17,7 +17,7 @@ export class EnvModule extends ConfigModule {
 		return super.forRoot({
 			...options,
 			envFilePath: [
-				join(__dirname, `../../../../.env.${process.env.NODE_ENV}`),
+				join(__dirname, `../../../../../.env.${process.env.NODE_ENV}`),
 			],
 		})
 	}
