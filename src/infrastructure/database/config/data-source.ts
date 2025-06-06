@@ -14,5 +14,5 @@ export default new DataSource({
 	password: configService.get('DATABASE_PASSWORD') || '1234',
 	database: configService.get('DATABASE_NAME') || 'postgres',
 	entities: [`${__dirname}/**/entities/*.{ts,js}`],
-	migrations: [`${__dirname}/**/migrations/*.{ts,js}`],
+	migrations: [`${__dirname}/../**/migrations/*.{ts,js}`],
 })

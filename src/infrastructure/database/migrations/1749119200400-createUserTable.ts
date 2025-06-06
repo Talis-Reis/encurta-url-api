@@ -8,10 +8,9 @@ export class CreateUserTable1749119200400 implements MigrationInterface {
 				columns: [
 					{
 						name: 'id',
-						type: 'uuid',
+						type: 'serial',
 						isPrimary: true,
-						generationStrategy: 'uuid',
-						default: 'uuid_generate_v4()',
+						primaryKeyConstraintName: 'pk_users_id',
 					},
 					{
 						name: 'email',
