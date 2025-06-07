@@ -7,4 +7,6 @@ export abstract class IEnvConfig {
 	abstract getDbUsername(): string
 	abstract getDbPassword(): string
 	abstract getDbSsl(): boolean
+	abstract getKeySecret(): string
+	abstract getExpirationKey(): string
 }
