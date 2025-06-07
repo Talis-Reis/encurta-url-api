@@ -9,7 +9,7 @@ export class CreateUserService {
 	constructor(private readonly userRepository: IUserRepository) {}
 
 	async execute(inputUser: InputUserDTO): Promise<{ message: string }> {
-		const resultUser: Users = await this.userRepository.findUserByEmail(
+		const resultUser: Users = await this.userRepository.getUserByEmail(
 			inputUser.email,
 		)
 

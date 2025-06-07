@@ -22,6 +22,15 @@ export class Users {
 	@Column('boolean', { name: 'isActive', default: () => 'true' })
 	isActive: boolean
 
+	@Column('text', { name: 'roles', array: true, default: () => "'{}'[]" })
+	roles: string[]
+
+	@Column('timestamp with time zone', { name: 'firstAccess', nullable: true })
+	firstAccess: Date | null
+
+	@Column('timestamp with time zone', { name: 'lastAccess', nullable: true })
+	lastAccess: Date | null
+
 	@Column('timestamp with time zone', { name: 'createdAt', nullable: true })
 	createdAt: Date | null
 

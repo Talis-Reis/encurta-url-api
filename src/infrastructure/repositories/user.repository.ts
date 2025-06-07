@@ -1,6 +1,7 @@
 import { IUserRepository } from '@/application/interfaces/user.inteface'
 import { Users } from '@/domain/models/users.entity'
-import { Inject, Injectable } from '@nestjs/common'
+import { UpdateUserDTO } from '@/presentation/auth/dto/auth.dto'
+import { HttpException, Inject, Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 
 @Injectable()
@@ -14,7 +15,7 @@ export class UserRepository implements IUserRepository {
 		return await this.userRepository.save(user)
 	}
 
-	async findUserByEmail(email: string): Promise<any> {
+	async getUserByEmail(email: string): Promise<Users> {
 		return await this.userRepository.findOne({
 			where: {
 				email: email,
@@ -22,7 +23,18 @@ export class UserRepository implements IUserRepository {
 		})
 	}
 
-	async findUserById(id: string): Promise<any> {
-		throw new Error('Method not implemented.')
+	async updateUser(id: number, user: UpdateUserDTO): Promise<void> {
+		try {
+			await this.userRepository.update(
+				{
+					id: id,
+				},
+				{
+					...user,
+				},
+			)
+		} catch (err) {
+			throw new HttpException(err.message, err.status)
+		}
 	}
 }

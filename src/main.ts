@@ -1,16 +1,19 @@
 import { ValidationPipe } from '@nestjs/common'
-import { NestFactory } from '@nestjs/core'
+import { NestFactory, Reflector } from '@nestjs/core'
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger'
 import * as packageJson from '../package.json'
 import { AppModule } from './app.module'
-import { loadEnvironment } from './shared/infrastructure/config/env/env.loader'
-import { IEnvConfig } from './shared/infrastructure/interface/env.interface'
+import { RolesGuard } from './application/use-cases/auth/guard/passport/roles.guard'
+import { loadEnvironment } from './shared/common/infrastructure/config/env/env.loader'
+import { IEnvConfig } from './shared/common/infrastructure/interface/env.interface'
 
 loadEnvironment()
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 
 	app.enableCors()
+
+	app.useGlobalGuards(new RolesGuard(new Reflector()))
 
 	app.useGlobalPipes(
 		new ValidationPipe({

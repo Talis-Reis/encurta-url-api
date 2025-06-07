@@ -1,58 +1,54 @@
-import { LoginDTO } from '@/presentation/auth/dto/auth.dto'
-import { Injectable } from '@nestjs/common'
+import { IAuth } from '@/application/interfaces/auth.interface'
+import { Users } from '@/domain/models/users.entity'
+import { LoginDTO, UpdateUserDTO } from '@/presentation/auth/dto/auth.dto'
+import { comparePassword } from '@/shared/utils/password'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { randomUUID } from 'crypto'
+import { GetUserByEmailService } from '../../user/services/get-user-by-email.service'
+import { UpdateUserService } from '../../user/services/update-user.service'
 
 @Injectable()
 export class CreateTokenService {
-	constructor() // private readonly authRepository: IAuthRepository,
-	// private readonly userRepository: IAccountsRepository,
-	{}
+	constructor(
+		private readonly authService: IAuth,
+		private readonly getUserByEmailService: GetUserByEmailService,
+		private readonly updateUserService: UpdateUserService,
+	) {}
 
 	async execute(login: LoginDTO): Promise<{ accessToken: string }> {
-		return null as any
-		// const resultUser: ExternalServiceUsers =
-		//     await this.userRepository.getUser(login.userName);
+		const resultUser: Users = await this.getUserByEmailService.execute(
+			login.email,
+		)
 
-		// if (!resultUser) throw new NotFoundException('Usuario não encontrado');
+		const { id, email }: { id: number; email: string } = resultUser
 
-		// const {
-		//     id,
-		//     userName,
-		//     accountId,
-		// }: { id: number; userName: string; accountId: UUID } = resultUser;
+		const password = await comparePassword(
+			login.password,
+			resultUser.password,
+		)
 
-		// const password = await comparePassword(
-		//     login.password,
-		//     resultUser.password,
-		// );
+		if (!password)
+			throw new UnauthorizedException('Usuário ou senha incorretos.')
 
-		// if (!password)
-		//     throw new UnauthorizedException('Usuário ou senha incorretos.');
+		const userUpdate = new UpdateUserDTO()
 
-		// const userUpdate = new UpdateUserDTO();
+		if (!resultUser.firstAccess) {
+			userUpdate.firstAccess = new Date()
+		}
 
-		// if (!resultUser.firstAccess) {
-		//     userUpdate.firstAccess = new Date();
-		// }
+		userUpdate.lastAccess = new Date()
 
-		// userUpdate.lastAccess = new Date();
+		const authorization: string[] = resultUser.roles
 
-		// const authorization: string[] = [];
+		const accessToken: string = await this.authService.createToken({
+			jti: randomUUID(),
+			sub: id,
+			email: email,
+			authorization: authorization,
+		})
 
-		// if (resultUser.useRDV) authorization.push('rdv');
-		// if (resultUser.useRTR) authorization.push('rtr');
-		// if (resultUser.useOrders) authorization.push('pedidos');
+		await this.updateUserService.execute(id, email, userUpdate)
 
-		// const accessToken: string = await this.authRepository.createToken({
-		//     jti: randomUUID(),
-		//     sub: id,
-		//     userId: resultUser.userId,
-		//     userName: userName,
-		//     accountId: accountId,
-		//     authorization: authorization,
-		// });
-
-		// await this.userRepository.updateUser(accountId, id, userUpdate);
-
-		// return { accessToken: accessToken };
+		return { accessToken: accessToken }
 	}
 }

@@ -1,4 +1,4 @@
-import { IEnvConfig } from '@/shared/infrastructure/interface/env.interface'
+import { IEnvConfig } from '@/shared/common/infrastructure/interface/env.interface'
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'

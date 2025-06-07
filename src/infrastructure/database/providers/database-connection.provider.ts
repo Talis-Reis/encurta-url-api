@@ -1,4 +1,4 @@
-import { IEnvConfig } from '@/shared/infrastructure/interface/env.interface'
+import { IEnvConfig } from '@/shared/common/infrastructure/interface/env.interface'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { DataBaseConfig } from '../config/database-config'
 

@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config'
 import { DataSource } from 'typeorm'
-import { loadEnvironment } from './../../../shared/infrastructure/config/env/env.loader'
+import { loadEnvironment } from '../../../shared/common/infrastructure/config/env/env.loader'
 
 loadEnvironment()
 

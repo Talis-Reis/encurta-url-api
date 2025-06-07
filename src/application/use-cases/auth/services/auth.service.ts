@@ -1,5 +1,5 @@
 import { IAuth } from '@/application/interfaces/auth.interface'
-import { IEnvConfig } from '@/shared/infrastructure/interface/env.interface'
+import { IEnvConfig } from '@/shared/common/infrastructure/interface/env.interface'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 
