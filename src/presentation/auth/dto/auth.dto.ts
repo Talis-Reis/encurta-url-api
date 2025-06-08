@@ -13,11 +13,6 @@ export class LoginDTO {
 	password: string
 }
 
-export class UpdateUserDTO {
-	firstAccess: Date
-	lastAccess: Date
-}
-
 export class ResponseAuthDTO {
 	@ApiProperty()
 	accessToken: string

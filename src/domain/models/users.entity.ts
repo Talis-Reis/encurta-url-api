@@ -19,9 +19,6 @@ export class Users {
 	@Column('character varying', { name: 'lastName' })
 	lastName: string
 
-	@Column('boolean', { name: 'isActive', default: () => 'true' })
-	isActive: boolean
-
 	@Column('text', { name: 'roles', array: true, default: () => "'{}'[]" })
 	roles: string[]
 

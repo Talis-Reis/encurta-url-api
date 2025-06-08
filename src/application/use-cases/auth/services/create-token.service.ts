@@ -1,18 +1,19 @@
 import { IAuth } from '@/application/interfaces/auth.interface'
 import { Users } from '@/domain/models/users.entity'
-import { LoginDTO, UpdateUserDTO } from '@/presentation/auth/dto/auth.dto'
+import { LoginDTO } from '@/presentation/auth/dto/auth.dto'
+import { UpdateAccessUserDTO } from '@/presentation/user/dto/user.dto'
 import { comparePassword } from '@/shared/utils/password'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { randomUUID } from 'crypto'
 import { GetUserByEmailService } from '../../user/services/get-user-by-email.service'
-import { UpdateUserService } from '../../user/services/update-user.service'
+import { UpdateAccessUserService } from '../../user/services/update-access-user.service'
 
 @Injectable()
 export class CreateTokenService {
 	constructor(
 		private readonly authService: IAuth,
 		private readonly getUserByEmailService: GetUserByEmailService,
-		private readonly updateUserService: UpdateUserService,
+		private readonly updateAccessUserService: UpdateAccessUserService,
 	) {}
 
 	async execute(login: LoginDTO): Promise<{ accessToken: string }> {
@@ -30,7 +31,7 @@ export class CreateTokenService {
 		if (!password)
 			throw new UnauthorizedException('Usuário ou senha incorretos.')
 
-		const userUpdate = new UpdateUserDTO()
+		const userUpdate = new UpdateAccessUserDTO()
 
 		if (!resultUser.firstAccess) {
 			userUpdate.firstAccess = new Date()
@@ -47,7 +48,7 @@ export class CreateTokenService {
 			authorization: authorization,
 		})
 
-		await this.updateUserService.execute(id, email, userUpdate)
+		await this.updateAccessUserService.execute(id, email, userUpdate)
 
 		return { accessToken: accessToken }
 	}

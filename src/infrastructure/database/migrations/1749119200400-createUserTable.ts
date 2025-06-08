@@ -30,15 +30,10 @@ export class CreateUserTable1749119200400 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'isActive',
-            type: 'boolean',
-            default: true,
-          },
-          {
             name: 'roles',
             type: 'text',
             isArray: true,
-            default: `'{}'`, // array vazio por padrão
+            default: `'{}'`,
           },
           {
             name: 'firstAccess',

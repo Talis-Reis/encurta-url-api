@@ -6,7 +6,7 @@ import { InputUserDTO } from '../user/dto/user.dto'
 import { LoginDTO, ResponseAuthDTO } from './dto/auth.dto'
 
 @Controller('/api/v1/auth')
-@ApiTags('Autenticação de Usuários')
+@ApiTags('Autenticação')
 export class AuthController {
 	constructor(
 		private readonly createToken: CreateTokenService,
@@ -14,7 +14,7 @@ export class AuthController {
 	) {}
 
 	@Post('signin')
-	@ApiOperation({ summary: 'Efetuar login para acesso' })
+	@ApiOperation({ summary: 'Efetua login' })
 	@ApiResponse({
 		status: 200,
 		description: 'Success',
@@ -27,7 +27,7 @@ export class AuthController {
 	}
 
 	@Post('signup')
-	@ApiOperation({ summary: 'Adicionar novos usuários de acesso' })
+	@ApiOperation({ summary: 'Adiciona novos usuários' })
 	@ApiResponse({
 		status: 200,
 		description: 'Success',

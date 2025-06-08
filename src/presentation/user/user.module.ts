@@ -1,9 +1,12 @@
 import { IUserRepository } from '@/application/interfaces/user.inteface'
 import { CreateUserService } from '@/application/use-cases/user/services/create-user.service'
 import { GetUserByEmailService } from '@/application/use-cases/user/services/get-user-by-email.service'
+import { UpdateAccessUserService } from '@/application/use-cases/user/services/update-access-user.service'
+import { UpdatePermissionUserService } from '@/application/use-cases/user/services/update-permission-user.service'
 import { UpdateUserService } from '@/application/use-cases/user/services/update-user.service'
 import { UserRepository } from '@/infrastructure/repositories/user.repository'
 import { Module } from '@nestjs/common'
+import { UserController } from './user.controller'
 
 const user = {
 	provide: IUserRepository,
@@ -15,8 +18,15 @@ const user = {
 		user,
 		CreateUserService,
 		GetUserByEmailService,
+		UpdateAccessUserService,
+		UpdatePermissionUserService,
 		UpdateUserService,
 	],
-	exports: [CreateUserService, GetUserByEmailService, UpdateUserService],
+	exports: [
+		CreateUserService,
+		GetUserByEmailService,
+		UpdateAccessUserService,
+	],
+	controllers: [UserController],
 })
 export class UserModule {}
