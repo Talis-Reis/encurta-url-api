@@ -7,6 +7,8 @@ import {
 	IsIn,
 	IsNotEmpty,
 	IsString,
+	Matches,
+	MinLength,
 } from 'class-validator'
 
 export class InputUserDTO {
@@ -19,6 +21,11 @@ export class InputUserDTO {
 	@ApiProperty()
 	@IsString({ message: 'O campo password deve ser uma string' })
 	@IsNotEmpty({ message: 'O campo password não pode ser vazio' })
+	@MinLength(8)
+	@Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).+$/, {
+		message:
+			'A senha deve conter pelo menos uma letra maiúscula, um número e um caractere especial',
+	})
 	password: string
 
 	@ApiProperty()
@@ -76,6 +83,23 @@ export class UpdatePermissionsUserDTO {
 		message: "Cada role deve ser uma das seguintes: 'admin' ou 'user'",
 	})
 	roles: string[]
+}
+
+export class UpdatePasswordUserDTO {
+	@ApiProperty()
+	@IsString({ message: 'O campo oldPassword deve ser uma string' })
+	@IsNotEmpty({ message: 'O campo oldPassword não pode ser vazio' })
+	oldPassword: string
+
+	@ApiProperty()
+	@IsString({ message: 'O campo password deve ser uma string' })
+	@IsNotEmpty({ message: 'O campo password não pode ser vazio' })
+	@MinLength(8)
+	@Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).+$/, {
+		message:
+			'A senha deve conter pelo menos uma letra maiúscula, um número e um caractere especial',
+	})
+	newPassword: string
 }
 
 export class UpdateAccessUserDTO {

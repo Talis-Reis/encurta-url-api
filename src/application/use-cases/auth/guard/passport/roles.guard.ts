@@ -14,9 +14,9 @@ export class RolesGuard extends AuthGuard('jwt') {
 	}
 
 	handleRequest(err, user, info, context: ExecutionContext) {
-		if (err || !user) {
-			throw err || new ForbiddenException('Usuário não autenticado.')
-		}
+		// if (err || !user) {
+		// 	throw err || new ForbiddenException('Usuário não autenticado.')
+		// }
 
 		const roles: string[] = this.reflector.getAllAndOverride<string[]>(
 			ROLES_KEY,
