@@ -1,4 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
+import {
+	Column,
+	Entity,
+	Index,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from 'typeorm'
+import { Urls } from './urls.entity'
 
 @Index('UQ_97672ac88f789774dd47f7c8be3', ['email'], { unique: true })
 @Index('pk_users_id', ['id'], { unique: true })
@@ -33,4 +40,7 @@ export class Users {
 
 	@Column('timestamp with time zone', { name: 'updatedAt', nullable: true })
 	updatedAt: Date | null
+
+	@OneToMany(() => Urls, urls => urls.user)
+	urls: Urls[]
 }
