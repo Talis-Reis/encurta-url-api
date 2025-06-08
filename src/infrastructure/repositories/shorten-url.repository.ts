@@ -12,7 +12,7 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 
 	async getById(idUrl: number): Promise<Urls> {
 		return await this.shortenUrlRepository.findOne({
-			where: { id: idUrl, deletedAt: null },
+			where: { id: idUrl, deletedAt: IsNull() },
 		})
 	}
 
@@ -38,8 +38,15 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 		})
 	}
 
-	updateUrl(id: string, originalUrl: string, userId: string): Promise<any> {
-		throw new Error('Method not implemented.')
+	async updateUrlOriginal(
+		id: number,
+		originalUrl: string,
+		userId: number,
+	): Promise<any> {
+		return await this.shortenUrlRepository.update(
+			{ id: id, userId: userId },
+			{ originalUrl: originalUrl, updatedAt: new Date() },
+		)
 	}
 
 	async deleteUrl(idUrl: number, idUser: number): Promise<void> {

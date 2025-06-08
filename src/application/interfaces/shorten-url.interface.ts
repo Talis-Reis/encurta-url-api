@@ -2,11 +2,11 @@ import { Urls } from '@/domain/models/urls.entity';
 
 export abstract class IShortenUrlRepository {
 	abstract listByUser(idUser: number): Promise<any[]>
-	abstract updateUrl(
-		id: string,
+	abstract updateUrlOriginal(
+		id: number,
 		originalUrl: string,
-		userId: string,
-	): Promise<any>
+		isUser: number,
+	): Promise<void>
 	abstract deleteUrl(idUrl: number, idUser: number): Promise<void>
 	abstract getByShortCode(shortCode: string): Promise<Urls>
 	abstract createShortenUrl(
