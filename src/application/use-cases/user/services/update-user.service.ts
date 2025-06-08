@@ -2,7 +2,7 @@ import { IUserRepository } from '@/application/interfaces/user.inteface'
 import { Users } from '@/domain/models/users.entity'
 import { UpdateUserDTO } from '@/presentation/user/dto/user.dto'
 import { MessageType } from '@/shared/common/@types/message.type'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 @Injectable()
 export class UpdateUserService {
@@ -12,7 +12,7 @@ export class UpdateUserService {
 		const existingUser: Users = await this.userRepository.getUserById(id)
 
 		if (!existingUser) {
-			throw new Error(
+			throw new NotFoundException(
 				'Problema ao atualizar usuário: usuário não encontrado.',
 			)
 		}
@@ -22,7 +22,7 @@ export class UpdateUserService {
 				user.email,
 			)
 			if (userByEmail) {
-				throw new Error(
+				throw new NotFoundException(
 					'Problema ao atualizar usuário: email já cadastrado.',
 				)
 			}

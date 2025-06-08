@@ -1,7 +1,7 @@
 import { IUserRepository } from '@/application/interfaces/user.inteface'
 import { Users } from '@/domain/models/users.entity'
 import { UpdateAccessUserDTO } from '@/presentation/user/dto/user.dto'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 @Injectable()
 export class UpdateAccessUserService {
@@ -16,7 +16,7 @@ export class UpdateAccessUserService {
 			await this.userRepository.getUserByEmail(email)
 
 		if (!existingUser) {
-			throw new Error(
+			throw new NotFoundException(
 				'Problema ao atualizar usuário: usuário não encontrado.',
 			)
 		}

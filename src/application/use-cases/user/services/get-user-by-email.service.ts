@@ -1,5 +1,5 @@
 import { IUserRepository } from '@/application/interfaces/user.inteface'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 @Injectable()
 export class GetUserByEmailService {
@@ -9,7 +9,7 @@ export class GetUserByEmailService {
 		const user = await this.userRepository.getUserByEmail(email)
 
 		if (!user) {
-			throw new Error('Usuário não encontrado.')
+			throw new NotFoundException('Usuário não encontrado.')
 		}
 		return user
 	}
