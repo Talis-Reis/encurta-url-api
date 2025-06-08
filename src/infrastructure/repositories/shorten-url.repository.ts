@@ -10,6 +10,13 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 		private readonly shortenUrlRepository: Repository<Urls>,
 	) {}
 
+	async updateClicks(idUrl: number, clicks: number): Promise<void> {
+		await this.shortenUrlRepository.update(
+			{ id: idUrl },
+			{ clicks: clicks, updatedAt: new Date() },
+		)
+	}
+
 	async getById(idUrl: number): Promise<Urls> {
 		return await this.shortenUrlRepository.findOne({
 			where: { id: idUrl, deletedAt: IsNull() },

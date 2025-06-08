@@ -15,4 +15,5 @@ export abstract class IShortenUrlRepository {
 		idUser?: number,
 	): Promise<Urls>
 	abstract getById(idUrl: number): Promise<Urls>
+	abstract updateClicks(idUrl: number, clicks: number): Promise<void>
 }

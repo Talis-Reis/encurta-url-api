@@ -4,6 +4,7 @@ import { AuthModule } from './presentation/auth/auth.module'
 import { ShortenUrlModule } from './presentation/shorten-url/shorten-url.module'
 import { UserModule } from './presentation/user/user.module'
 import { EnvModule } from './shared/common/infrastructure/config/env/env.module'
+import { RedirectModule } from './presentation/redirect/redirect.module';
 @Module({
 	imports: [
 		//Configs
@@ -13,6 +14,7 @@ import { EnvModule } from './shared/common/infrastructure/config/env/env.module'
 		AuthModule,
 		UserModule,
 		ShortenUrlModule,
+		RedirectModule,
 	],
 	controllers: [],
 	providers: [],
