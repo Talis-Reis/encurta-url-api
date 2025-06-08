@@ -17,7 +17,7 @@ import {
 	UpdateUserDTO,
 } from './dto/user.dto'
 
-@Controller('/api/v1/users')
+@Controller('v1/users')
 @ApiTags('Usuários')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)

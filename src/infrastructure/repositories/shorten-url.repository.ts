@@ -15,7 +15,7 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 		shortCode: string,
 		idUser?: number,
 	): Promise<Urls> {
-		const newShortenUrl = this.shortenUrlRepository.create({
+		const newShortenUrl: Urls = this.shortenUrlRepository.create({
 			shortCode: shortCode,
 			originalUrl: urlOriginal,
 			userId: idUser,
@@ -25,9 +25,19 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 		return this.shortenUrlRepository.save(newShortenUrl)
 	}
 
-	listByUser(userId: string): Promise<any[]> {
-		throw new Error('Method not implemented.')
+	async listByUser(idUser: number): Promise<Urls[]> {
+		return await this.shortenUrlRepository.find({
+			select: {
+				id: true,
+				shortCode: true,
+				originalUrl: true,
+				clicks: true,
+			},
+			where: { userId: idUser },
+			order: { createdAt: 'DESC' },
+		})
 	}
+
 	updateUrl(id: string, originalUrl: string, userId: string): Promise<any> {
 		throw new Error('Method not implemented.')
 	}

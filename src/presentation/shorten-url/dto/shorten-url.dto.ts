@@ -7,3 +7,29 @@ export class InputUrlDTO {
 	@IsNotEmpty({ message: 'O campo email não pode ser vazio' })
 	url: string
 }
+
+export class ResponseListShortenUrlDTO {
+	@ApiProperty()
+	id: number
+
+	@ApiProperty()
+	original_url: string
+
+	@ApiProperty()
+	clicks: number
+
+	@ApiProperty()
+	short_url: string
+
+	constructor(
+		id: number,
+		originalUrl: string,
+		clicks: number,
+		shortUrl: string,
+	) {
+		this.id = id
+		this.original_url = originalUrl
+		this.clicks = clicks
+		this.short_url = shortUrl
+	}
+}

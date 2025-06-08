@@ -24,6 +24,8 @@ async function bootstrap() {
 		}),
 	)
 
+	app.setGlobalPrefix(`api`)
+
 	const config = new DocumentBuilder()
 		.setTitle('Encurtador de URLs')
 		.setDescription(packageJson.description)
@@ -44,6 +46,6 @@ async function bootstrap() {
 
 	const port: number = app.get(IEnvConfig).getAppPort()
 
-	await app.listen(port ?? 3000)
+	await app.listen(port)
 }
 bootstrap()
