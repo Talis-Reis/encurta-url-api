@@ -1,7 +1,7 @@
 import { IShortenUrlRepository } from '@/application/interfaces/shorten-url.interface'
 import { Urls } from '@/domain/models/urls.entity'
 import { Inject, Injectable } from '@nestjs/common'
-import { Repository } from 'typeorm'
+import { IsNull, Repository } from 'typeorm'
 
 @Injectable()
 export class ShortenUrlRepository implements IShortenUrlRepository {
@@ -9,6 +9,12 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 		@Inject('SHORTEN_URL_REPOSITORY')
 		private readonly shortenUrlRepository: Repository<Urls>,
 	) {}
+
+	async getById(idUrl: number): Promise<Urls> {
+		return await this.shortenUrlRepository.findOne({
+			where: { id: idUrl, deletedAt: null },
+		})
+	}
 
 	async createShortenUrl(
 		urlOriginal: string,
@@ -22,18 +28,12 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 			createdAt: new Date(),
 		})
 
-		return this.shortenUrlRepository.save(newShortenUrl)
+		return await this.shortenUrlRepository.save(newShortenUrl)
 	}
 
 	async listByUser(idUser: number): Promise<Urls[]> {
 		return await this.shortenUrlRepository.find({
-			select: {
-				id: true,
-				shortCode: true,
-				originalUrl: true,
-				clicks: true,
-			},
-			where: { userId: idUser },
+			where: { userId: idUser, deletedAt: IsNull() },
 			order: { createdAt: 'DESC' },
 		})
 	}
@@ -41,8 +41,12 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 	updateUrl(id: string, originalUrl: string, userId: string): Promise<any> {
 		throw new Error('Method not implemented.')
 	}
-	deleteUrl(id: string, userId: string): Promise<void> {
-		throw new Error('Method not implemented.')
+
+	async deleteUrl(idUrl: number, idUser: number): Promise<void> {
+		await this.shortenUrlRepository.update(
+			{ id: idUrl, userId: idUser },
+			{ deletedAt: new Date() },
+		)
 	}
 
 	async getByShortCode(shortCode: string): Promise<Urls> {

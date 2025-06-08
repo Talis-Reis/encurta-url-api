@@ -7,11 +7,12 @@ export abstract class IShortenUrlRepository {
 		originalUrl: string,
 		userId: string,
 	): Promise<any>
-	abstract deleteUrl(id: string, userId: string): Promise<void>
+	abstract deleteUrl(idUrl: number, idUser: number): Promise<void>
 	abstract getByShortCode(shortCode: string): Promise<Urls>
 	abstract createShortenUrl(
 		urlOriginal: string,
 		shortCode: string,
 		idUser?: number,
 	): Promise<Urls>
+	abstract getById(idUrl: number): Promise<Urls>
 }
