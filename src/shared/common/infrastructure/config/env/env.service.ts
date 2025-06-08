@@ -6,6 +6,12 @@ import { IEnvConfig } from '../../interface/env.interface'
 export class EnvService implements IEnvConfig {
 	constructor(private readonly configService: ConfigService) {}
 
+	getAppDomain(): string {
+		return (
+			this.configService.get<string>('APP_DOMAIN') || 'http://localhost'
+		)
+	}
+
 	getExpirationKey(): string {
 		return this.configService.get<string>('EXPIRATION_KEY') || '1h'
 	}

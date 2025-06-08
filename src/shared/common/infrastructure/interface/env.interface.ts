@@ -9,4 +9,5 @@ export abstract class IEnvConfig {
 	abstract getDbSsl(): boolean
 	abstract getKeySecret(): string
 	abstract getExpirationKey(): string
+	abstract getAppDomain(): string
 }
