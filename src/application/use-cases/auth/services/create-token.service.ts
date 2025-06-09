@@ -21,6 +21,9 @@ export class CreateTokenService {
 			login.email,
 		)
 
+		if (!resultUser)
+			throw new UnauthorizedException('Usuário ou senha incorretos.')
+
 		const { id, email }: { id: number; email: string } = resultUser
 
 		const password: boolean = await comparePassword(

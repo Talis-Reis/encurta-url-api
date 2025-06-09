@@ -1,9 +1,11 @@
+import { RolesEnum } from '@/application/use-cases/auth/guard/enums/roles.enum'
 import { JwtAuthGuard } from '@/application/use-cases/auth/guard/passport/jwt.guard'
 import { UpdatePasswordService } from '@/application/use-cases/user/services/update-password.service'
 import { UpdatePermissionUserService } from '@/application/use-cases/user/services/update-permission-user.service'
 import { UpdateUserService } from '@/application/use-cases/user/services/update-user.service'
 import { MessageType } from '@/shared/common/@types/message.type'
 import { ReqType } from '@/shared/common/@types/request.type'
+import { Roles } from '@/shared/common/decorator/roles.decorator'
 import { Body, Controller, Param, Patch, Req, UseGuards } from '@nestjs/common'
 import {
 	ApiBearerAuth,
@@ -29,7 +31,7 @@ export class UserController {
 	) {}
 
 	@Patch('change-user')
-	// @Roles(RolesEnum.USER, RolesEnum.ADMIN)
+	@Roles(RolesEnum.USER, RolesEnum.ADMIN)
 	@ApiOperation({ summary: 'Altera dados de um usuário' })
 	@ApiResponse({
 		status: 200,
@@ -46,7 +48,7 @@ export class UserController {
 	}
 
 	@Patch(':id/permissions')
-	// @Roles(RolesEnum.ADMIN)
+	@Roles(RolesEnum.ADMIN)
 	@ApiOperation({ summary: 'Altera permissões de um usuário' })
 	@ApiResponse({
 		status: 200,
@@ -65,7 +67,7 @@ export class UserController {
 	}
 
 	@Patch('change-password')
-	// @Roles(RolesEnum.USER, RolesEnum.ADMIN)
+	@Roles(RolesEnum.USER, RolesEnum.ADMIN)
 	@ApiOperation({ summary: 'Altera senha de um usuário' })
 	@ApiResponse({
 		status: 200,

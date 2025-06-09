@@ -1,10 +1,13 @@
+import { RolesEnum } from '@/application/use-cases/auth/guard/enums/roles.enum'
 import { JwtAuthOptionalGuard } from '@/application/use-cases/auth/guard/passport/jwt-optional.guard'
 import { JwtAuthGuard } from '@/application/use-cases/auth/guard/passport/jwt.guard'
+import { RolesGuard } from '@/application/use-cases/auth/guard/passport/roles.guard'
 import { CreateShortenUrlService } from '@/application/use-cases/urls/services/create-shorten-url.service'
 import { DeleteShortenUrlService } from '@/application/use-cases/urls/services/delete-sorten-url.service'
 import { ListShortenUrlByUserIdService } from '@/application/use-cases/urls/services/get-list-shorten-url-by-user-id.service'
 import { UpdateUrlOriginalService } from '@/application/use-cases/urls/services/update-url-original.service'
 import { ReqType } from '@/shared/common/@types/request.type'
+import { Roles } from '@/shared/common/decorator/roles.decorator'
 import {
 	Body,
 	Controller,
@@ -65,7 +68,8 @@ export class ShortenUrlController {
 	})
 	@ApiResponse({ status: 500, description: 'Server Error' })
 	@ApiResponse({ status: 400, description: 'Bad Request' })
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard, RolesGuard)
+	@Roles(RolesEnum.USER, RolesEnum.ADMIN)
 	async list(@Req() req: ReqType) {
 		const idUser: number = req.user.sub
 		return this.listShortenUrlByUserIdService.execute(idUser)
@@ -82,7 +86,8 @@ export class ShortenUrlController {
 	})
 	@ApiResponse({ status: 500, description: 'Server Error' })
 	@ApiResponse({ status: 400, description: 'Bad Request' })
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard, RolesGuard)
+	@Roles(RolesEnum.USER, RolesEnum.ADMIN)
 	async update(
 		@Param('id', ParseIntPipe) id: number,
 		@Body() request: InputUrlDTO,
@@ -100,7 +105,8 @@ export class ShortenUrlController {
 	})
 	@ApiResponse({ status: 500, description: 'Server Error' })
 	@ApiResponse({ status: 400, description: 'Bad Request' })
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard, RolesGuard)
+	@Roles(RolesEnum.USER, RolesEnum.ADMIN)
 	async remove(
 		@Param('id', ParseIntPipe) idUrl: number,
 		@Req() req: ReqType,
