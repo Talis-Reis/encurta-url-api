@@ -46,7 +46,7 @@ Esta API permite criar, listar, atualizar e remover URLs encurtadas, além de au
 O projeto possui um arquivo `docker-compose.yml` para facilitar a execução do ambiente completo (API + banco de dados).
 
 1. **Configure o arquivo `.env`**
-   Crie um arquivo `.env.development` baseado no `.env.example` e ajuste as variáveis conforme necessário.
+   Crie um arquivo `.env.development` baseado no `.env.example` e ajuste as variáveis conforme necessário, o `.env.example` já possui a configuração necessária, só copiar os dados do arquivo e colar dentro do `.env.development`.
 
 2. **Suba os containers**
    Execute o comando abaixo na raiz do projeto:
@@ -73,7 +73,7 @@ Siga os passos de configuração e execução descritos abaixo.
 
 ## Configuração
 
-Crie um arquivo `.env.development` baseado no `.env.example` e configure as variáveis de ambiente, como conexão com banco de dados e chave JWT.
+Crie um arquivo `.env.development` baseado no `.env.example` e configure as variáveis de ambiente, como conexão com banco de dados e chave JWT. O `.env.example` já possui a configuração necessária, só copiar os dados do arquivo e colar dentro do `.env.development` depois alterar o host do banco de dados para localhost ou 127.0.0.1
 
 > **Dica:**
 > Você pode copiar o arquivo `.env.example` e renomear para `.env.development` para facilitar.
@@ -114,11 +114,11 @@ Acesse a documentação Swagger em: `http://localhost:3000/api`
 
 ### Redirecionamento
 
-- `GET /v1/redirect/:shortCode` — Redireciona para a URL original
+- `GET /v1/:shortCode` — Redireciona para a URL original
 
 > **Dica:**
 > Para testar o redirecionamento, utilize a rota completa no navegador, por exemplo:
-> `http://localhost:3000/api/v1/redirect/SHDs23`
+> `http://localhost:3000/api/v1/SHDs23`
 >
 > Se você tentar acessar essa rota pelo Swagger, pode ocorrer um erro, pois o Swagger não lida bem com redirecionamentos.
 > Nesse caso, copie a URL gerada e acesse diretamente pelo navegador, ou utilize ferramentas como Postman ou Insomnia para testar o redirecionamento corretamente.

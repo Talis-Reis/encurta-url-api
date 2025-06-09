@@ -17,9 +17,10 @@ export class ListShortenUrlByUserIdService {
 			await this.shortenUrlRepository.listByUser(idUser)
 
 		const domain: string = this.envConfig.getAppDomain()
+		const port: number = this.envConfig.getAppPort()
 
 		return listaUrl.map(url => {
-			const urlShorten: string = getUrlDomain(domain, url.shortCode)
+			const urlShorten: string = getUrlDomain(domain, port, url.shortCode)
 			return new ResponseListShortenUrlDTO(
 				url.id,
 				url.originalUrl,

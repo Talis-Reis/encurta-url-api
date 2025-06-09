@@ -41,7 +41,8 @@ export class CreateShortenUrlService {
 		)
 
 		const domain: string = this.envConfig.getAppDomain()
+		const port: number = this.envConfig.getAppPort()
 
-		return getUrlDomain(domain, shortCode)
+		return getUrlDomain(domain, port, shortCode)
 	}
 }

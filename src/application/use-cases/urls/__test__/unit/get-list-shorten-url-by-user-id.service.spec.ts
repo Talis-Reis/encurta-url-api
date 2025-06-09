@@ -30,6 +30,7 @@ describe('ListShortenUrlByUserIdService Unit Test', () => {
 					provide: IEnvConfig,
 					useValue: {
 						getAppDomain: jest.fn(),
+						getAppPort: jest.fn(),
 					},
 				},
 			],
@@ -69,6 +70,7 @@ describe('ListShortenUrlByUserIdService Unit Test', () => {
 		jest.spyOn(envConfig, 'getAppDomain').mockReturnValue(
 			'https://encurta.dev',
 		)
+		jest.spyOn(envConfig, 'getAppPort').mockReturnValue(3000)
 		const getUrlDomainMock = getUrlDomain as jest.Mock
 		getUrlDomainMock
 			.mockReturnValueOnce('https://encurta.dev/abc123')
@@ -78,14 +80,17 @@ describe('ListShortenUrlByUserIdService Unit Test', () => {
 
 		expect(shortenUrlRepository.listByUser).toHaveBeenCalledWith(42)
 		expect(envConfig.getAppDomain).toHaveBeenCalled()
+		expect(envConfig.getAppPort).toHaveBeenCalled()
 		expect(getUrlDomainMock).toHaveBeenNthCalledWith(
 			1,
 			'https://encurta.dev',
+			3000,
 			'abc123',
 		)
 		expect(getUrlDomainMock).toHaveBeenNthCalledWith(
 			2,
 			'https://encurta.dev',
+			3000,
 			'def456',
 		)
 		expect(result).toEqual([
@@ -109,6 +114,7 @@ describe('ListShortenUrlByUserIdService Unit Test', () => {
 		jest.spyOn(envConfig, 'getAppDomain').mockReturnValue(
 			'https://encurta.dev',
 		)
+		jest.spyOn(envConfig, 'getAppPort').mockReturnValue(3000)
 
 		const result = await service.execute(99)
 

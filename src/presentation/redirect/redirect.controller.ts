@@ -3,7 +3,7 @@ import { Controller, Get, Param, Res } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 
-@Controller('v1/redirect')
+@Controller('v1')
 @ApiTags('Redirecionar URL encurtada')
 export class RedirectController {
 	constructor(private readonly redirectUrlService: RedirectUrlService) {}
