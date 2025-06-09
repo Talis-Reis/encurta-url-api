@@ -47,7 +47,7 @@ export class ShortenUrlController {
 	@UseGuards(JwtAuthOptionalGuard)
 	async shorten(@Body() request: InputUrlDTO, @Req() req: ReqType) {
 		const idUser: number = req.user?.sub
-		const shortUrl = await this.createShortenUrlService.execute(
+		const shortUrl: string = await this.createShortenUrlService.execute(
 			request.url,
 			idUser,
 		)

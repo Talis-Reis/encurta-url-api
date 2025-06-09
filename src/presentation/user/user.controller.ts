@@ -4,7 +4,7 @@ import { UpdatePermissionUserService } from '@/application/use-cases/user/servic
 import { UpdateUserService } from '@/application/use-cases/user/services/update-user.service'
 import { MessageType } from '@/shared/common/@types/message.type'
 import { ReqType } from '@/shared/common/@types/request.type'
-import { Body, Controller, Param, Put, Req, UseGuards } from '@nestjs/common'
+import { Body, Controller, Param, Patch, Req, UseGuards } from '@nestjs/common'
 import {
 	ApiBearerAuth,
 	ApiOperation,
@@ -28,7 +28,7 @@ export class UserController {
 		private readonly updatePasswordService: UpdatePasswordService,
 	) {}
 
-	@Put('change-user')
+	@Patch('change-user')
 	// @Roles(RolesEnum.USER, RolesEnum.ADMIN)
 	@ApiOperation({ summary: 'Altera dados de um usuário' })
 	@ApiResponse({
@@ -45,7 +45,7 @@ export class UserController {
 		return await this.updateUserService.execute(idUser, user)
 	}
 
-	@Put(':id/permissions')
+	@Patch(':id/permissions')
 	// @Roles(RolesEnum.ADMIN)
 	@ApiOperation({ summary: 'Altera permissões de um usuário' })
 	@ApiResponse({
@@ -64,7 +64,7 @@ export class UserController {
 		)
 	}
 
-	@Put('change-password')
+	@Patch('change-password')
 	// @Roles(RolesEnum.USER, RolesEnum.ADMIN)
 	@ApiOperation({ summary: 'Altera senha de um usuário' })
 	@ApiResponse({
@@ -80,7 +80,7 @@ export class UserController {
 		const idUser: number = req.user.sub
 		return await this.updatePasswordService.execute(
 			idUser,
-			passwords.oldPassword,
+			passwords.currentPassword,
 			passwords.newPassword,
 		)
 	}

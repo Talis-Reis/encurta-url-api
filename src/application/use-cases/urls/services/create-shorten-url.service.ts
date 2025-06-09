@@ -12,9 +12,9 @@ export class CreateShortenUrlService {
 	) {}
 
 	private generateShortCode(): string {
-		const chars =
+		const chars: string =
 			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-		let result = ''
+		let result: string = ''
 		for (let i = 0; i < 6; i++) {
 			result += chars.charAt(Math.floor(Math.random() * chars.length))
 		}
@@ -32,7 +32,7 @@ export class CreateShortenUrlService {
 	}
 
 	async execute(urlOriginal: string, idUser?: number): Promise<string> {
-		const shortCode = await this.generateUniqueShortCode()
+		const shortCode: string = await this.generateUniqueShortCode()
 
 		await this.shortenUrlRepository.createShortenUrl(
 			urlOriginal,

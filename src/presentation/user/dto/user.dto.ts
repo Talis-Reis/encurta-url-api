@@ -6,6 +6,7 @@ import {
 	IsEmail,
 	IsIn,
 	IsNotEmpty,
+	IsOptional,
 	IsString,
 	Matches,
 	MinLength,
@@ -54,19 +55,19 @@ export class InputUserDTO {
 
 export class UpdateUserDTO {
 	@ApiProperty()
+	@IsOptional()
 	@IsEmail({}, { message: 'O campo email deve ser um email válido' })
 	@IsString({ message: 'O campo email deve ser uma string' })
-	@IsNotEmpty({ message: 'O campo email não pode ser vazio' })
 	email: string
 
 	@ApiProperty()
+	@IsOptional()
 	@IsString({ message: 'O campo firstName deve ser uma string' })
-	@IsNotEmpty({ message: 'O campo firstName não pode ser vazio' })
 	firstName: string
 
 	@ApiProperty()
+	@IsOptional()
 	@IsString({ message: 'O campo lastName deve ser uma string' })
-	@IsNotEmpty({ message: 'O campo lastName não pode ser vazio' })
 	lastName: string
 }
 
@@ -87,13 +88,13 @@ export class UpdatePermissionsUserDTO {
 
 export class UpdatePasswordUserDTO {
 	@ApiProperty()
-	@IsString({ message: 'O campo oldPassword deve ser uma string' })
-	@IsNotEmpty({ message: 'O campo oldPassword não pode ser vazio' })
-	oldPassword: string
+	@IsString({ message: 'O campo currentPassword deve ser uma string' })
+	@IsNotEmpty({ message: 'O campo currentPassword não pode ser vazio' })
+	currentPassword: string
 
 	@ApiProperty()
-	@IsString({ message: 'O campo password deve ser uma string' })
-	@IsNotEmpty({ message: 'O campo password não pode ser vazio' })
+	@IsString({ message: 'O campo newPassword deve ser uma string' })
+	@IsNotEmpty({ message: 'O campo newPassword não pode ser vazio' })
 	@MinLength(8)
 	@Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).+$/, {
 		message:

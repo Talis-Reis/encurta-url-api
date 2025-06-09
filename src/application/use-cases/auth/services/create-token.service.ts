@@ -23,7 +23,7 @@ export class CreateTokenService {
 
 		const { id, email }: { id: number; email: string } = resultUser
 
-		const password = await comparePassword(
+		const password: boolean = await comparePassword(
 			login.password,
 			resultUser.password,
 		)

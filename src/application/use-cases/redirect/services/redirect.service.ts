@@ -1,3 +1,4 @@
+import { Urls } from '@/domain/models/urls.entity'
 import { Injectable } from '@nestjs/common'
 import { GetShortCodeService } from '../../urls/services/get-short-code.service'
 import { UpdateClicksService } from '../../urls/services/update-clicks.service'
@@ -10,7 +11,7 @@ export class RedirectUrlService {
 	) {}
 
 	async execute(shortCode: string): Promise<string> {
-		const url = await this.getShortCodeService.execute(shortCode)
+		const url: Urls = await this.getShortCodeService.execute(shortCode)
 
 		await this.updateClicksService.execute(url.id)
 		return url.originalUrl

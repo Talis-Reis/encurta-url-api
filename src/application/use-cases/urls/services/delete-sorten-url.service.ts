@@ -1,4 +1,5 @@
 import { IShortenUrlRepository } from '@/application/interfaces/shorten-url.interface'
+import { Urls } from '@/domain/models/urls.entity'
 import { MessageType } from '@/shared/common/@types/message.type'
 import { IEnvConfig } from '@/shared/common/infrastructure/interface/env.interface'
 import {
@@ -15,7 +16,7 @@ export class DeleteShortenUrlService {
 	) {}
 
 	async execute(idUrl: number, idUser: number): Promise<MessageType> {
-		const url = await this.shortenUrlRepository.getById(idUrl)
+		const url: Urls = await this.shortenUrlRepository.getById(idUrl)
 
 		if (!url) {
 			throw new NotFoundException(`URL com ID ${idUrl} não encontrada`)

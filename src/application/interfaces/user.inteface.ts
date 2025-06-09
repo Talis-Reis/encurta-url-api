@@ -1,12 +1,13 @@
 import { Users } from '@/domain/models/users.entity'
 import {
+	InputUserDTO,
 	UpdateAccessUserDTO,
 	UpdatePermissionsUserDTO,
 	UpdateUserDTO,
 } from '@/presentation/user/dto/user.dto'
 
 export abstract class IUserRepository {
-	abstract createUser(user: any): Promise<any>
+	abstract createUser(user: InputUserDTO): Promise<Users>
 	abstract getUserByEmail(email: string): Promise<Users>
 	abstract getUserById(id: number): Promise<Users>
 	abstract updateAcessUser(

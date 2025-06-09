@@ -1,6 +1,7 @@
 import { IUserRepository } from '@/application/interfaces/user.inteface'
 import { Users } from '@/domain/models/users.entity'
 import {
+	InputUserDTO,
 	UpdateAccessUserDTO,
 	UpdatePermissionsUserDTO,
 	UpdateUserDTO,
@@ -62,7 +63,7 @@ export class UserRepository implements IUserRepository {
 		)
 	}
 
-	async createUser(user: any): Promise<any> {
+	async createUser(user: InputUserDTO): Promise<Users> {
 		return await this.userRepository.save({
 			...user,
 			createdAt: new Date(),

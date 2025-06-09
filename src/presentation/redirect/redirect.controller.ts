@@ -19,7 +19,8 @@ export class RedirectController {
 		@Param('shortCode') shortCode: string,
 		@Res() res: Response,
 	) {
-		const originalUrl = await this.redirectUrlService.execute(shortCode)
+		const originalUrl: string =
+			await this.redirectUrlService.execute(shortCode)
 		return res.redirect(originalUrl)
 	}
 }

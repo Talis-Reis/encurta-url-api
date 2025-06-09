@@ -1,4 +1,5 @@
 import { IShortenUrlRepository } from '@/application/interfaces/shorten-url.interface'
+import { Urls } from '@/domain/models/urls.entity'
 import { Injectable, NotFoundException } from '@nestjs/common'
 
 @Injectable()
@@ -6,7 +7,7 @@ export class UpdateClicksService {
 	constructor(private readonly shortenUrlRepository: IShortenUrlRepository) {}
 
 	async execute(idUrl: number): Promise<void> {
-		const url = await this.shortenUrlRepository.getById(idUrl)
+		const url: Urls = await this.shortenUrlRepository.getById(idUrl)
 
 		if (!url) {
 			throw new NotFoundException(

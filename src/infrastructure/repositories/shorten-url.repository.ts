@@ -49,8 +49,8 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 		id: number,
 		originalUrl: string,
 		userId: number,
-	): Promise<any> {
-		return await this.shortenUrlRepository.update(
+	): Promise<void> {
+		await this.shortenUrlRepository.update(
 			{ id: id, userId: userId },
 			{ originalUrl: originalUrl, updatedAt: new Date() },
 		)
@@ -65,7 +65,7 @@ export class ShortenUrlRepository implements IShortenUrlRepository {
 
 	async getByShortCode(shortCode: string): Promise<Urls> {
 		return await this.shortenUrlRepository.findOne({
-			where: { shortCode: shortCode },
+			where: { shortCode: shortCode, deletedAt: IsNull() },
 		})
 	}
 }
