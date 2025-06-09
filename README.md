@@ -21,78 +21,114 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Encurta URL API
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+API para encurtamento de URLs, desenvolvida em [NestJS](https://nestjs.com/) por Talis Aparecido dos Reis.
 
-## Project setup
+## Sumário
+
+- [Descrição](#descrição)
+- [Instalação](#instalação)
+- [Configuração](#configuração)
+- [Execução](#execução)
+- [Endpoints Principais](#endpoints-principais)
+- [Testes](#testes)
+- [Licença](#licença)
+
+## Descrição
+
+Esta API permite criar, listar, atualizar e remover URLs encurtadas, além de autenticação de usuários e controle de permissões.
+
+## Instalação
+
+### Usando Docker Compose
+
+O projeto possui um arquivo `docker-compose.yml` para facilitar a execução do ambiente completo (API + banco de dados).
+
+1. **Configure o arquivo `.env`**
+   Crie um arquivo `.env.development` baseado no `.env.example` e ajuste as variáveis conforme necessário.
+
+2. **Suba os containers**
+   Execute o comando abaixo na raiz do projeto:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   Isso irá subir a API e o banco de dados (PostgreSQL) já configurados.
+
+3. **Acesse a aplicação**
+   - API: [http://localhost:3000/api](http://localhost:3000/api)
+   - Banco de dados: disponível na porta definida no `docker-compose.yml`
+
+### Instalação manual (sem Docker)
+
+Se preferir rodar localmente sem Docker:
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+Siga os passos de configuração e execução descritos abaixo.
+
+## Configuração
+
+Crie um arquivo `.env.development` baseado no `.env.example` e configure as variáveis de ambiente, como conexão com banco de dados e chave JWT.
+
+> **Dica:**
+> Você pode copiar o arquivo `.env.example` e renomear para `.env.development` para facilitar.
+> O arquivo `.env.example` já contém todas as variáveis necessárias para rodar o projeto.
+
+## Execução
 
 ```bash
-# development
-$ npm run start
+# Desenvolvimento
+npm run start:dev
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Produção
+npm run build
+npm run start:prod
 ```
 
-## Run tests
+Acesse a documentação Swagger em: `http://localhost:3000/api`
+
+## Endpoints Principais
+
+### Autenticação
+
+- `POST /v1/auth/signin` — Login do usuário
+- `POST /v1/auth/signup` — Cadastro de novo usuário
+
+### Usuários
+
+- `PATCH /v1/users/change-user` — Atualiza dados do usuário autenticado
+- `PATCH /v1/users/:id/permissions` — Atualiza permissões (admin, user)
+- `PATCH /v1/users/change-password` — Altera senha do usuário autenticado
+
+### URLs Encurtadas
+
+- `POST /v1/shorten-url` — Cria uma nova URL encurtada
+- `GET /v1/shorten-url` — Lista URLs encurtadas do usuário
+- `PATCH /v1/shorten-url/:id` — Atualiza a URL original
+- `DELETE /v1/shorten-url/:id` — Remove uma URL encurtada
+
+### Redirecionamento
+
+- `GET /v1/redirect/:shortCode` — Redireciona para a URL original
+
+> **Dica:**
+> Para testar o redirecionamento, utilize a rota completa no navegador, por exemplo:
+> `http://localhost:3000/api/v1/redirect/SHDs23`
+>
+> Se você tentar acessar essa rota pelo Swagger, pode ocorrer um erro, pois o Swagger não lida bem com redirecionamentos.
+> Nesse caso, copie a URL gerada e acesse diretamente pelo navegador, ou utilize ferramentas como Postman ou Insomnia para testar o redirecionamento corretamente.
+
+## Testes
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run test
 ```
 
-## Deployment
+## Licença
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+UNLICENSED
